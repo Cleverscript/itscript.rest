@@ -1,0 +1,10 @@
+<?php
+$MESS['ITSCRIPT_REST_MODULE_NAME'] = 'REST API';
+$MESS['ITSCRIPT_REST_MODULE_DESC'] = 'Реализация REST API';
+$MESS['ITSCRIPT_REST_PARTNER_NAME'] = 'Itscript';
+$MESS['ITSCRIPT_REST_PARTNER_URI'] = 'https://itscript.ru';
+$MESS['ITSCRIPT_REST_INSTALL_ERROR_VERSION'] = 'Минимальная версия 20.00.00';
+$MESS['ITSCRIPT_REST_RIGHT_DENIED'] = 'Доступ запрещен';
+$MESS['ITSCRIPT_REST_RIGHT_READ'] = 'Только чтение';
+$MESS['ITSCRIPT_REST_RIGHT_WRITE_SETTINGS'] = 'Изменение настроек модуля';
+$MESS['ITSCRIPT_REST_RIGHT_FULL'] = 'Полный доступ';

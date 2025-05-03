@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c76ba6cf-350a-4b35-aecd-950d0eea58e8" name="itscript.rest">
+        <fileTransfer rootFolder="/home/bitrix/ext_www/bx-standart.local/local/modules/itscript.rest" accessType="SFTP" host="192.168.1.107" port="22" sshConfigId="8e326df8-9353-4dc0-a8d1-d45742ca2cec" sshConfig="bitrix@192.168.1.107:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="060f3944-bd5a-4532-916f-2f35a034bf58" name="bx-standart.local">
+        <fileTransfer rootFolder="/home/bitrix/ext_www/bx-standart.local" accessType="SFTP" host="192.168.1.107" port="22" sshConfigId="8e326df8-9353-4dc0-a8d1-d45742ca2cec" sshConfig="bitrix@192.168.1.107:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
