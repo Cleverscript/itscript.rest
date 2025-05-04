@@ -1,4 +1,5 @@
 <?php
+
 namespace Itscript\Rest\Services;
 
 use Itscript\Rest\Traits\SingletonTrait;

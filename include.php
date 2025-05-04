@@ -1,7 +1,12 @@
 <?php
+
+declare(strict_types=1);
+
 use Bitrix\Main\Loader;
-use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Config\Option;
+use Bitrix\Main\Localization\Loc;
+
+require 'vendor/autoload.php';
 
 const ITSCRIPT_REST_MID = "itscript.rest";
 
