@@ -2,23 +2,26 @@
 
 namespace Itscript\Rest\Services;
 
+use Bitrix\Main\Context;
+use Bitrix\Main\DI\ServiceLocator;
 use Itscript\Rest\Entities\Route;
 
 class RoutService
 {
-    public function isAllowed($requestUri, $apiRootPath): bool
+    public function getRoute(): Route
     {
-        return (!str_contains($requestUri, $apiRootPath))? false : true;
-    }
+        $moduleService = ServiceLocator::getInstance()->get(ITSCRIPT_REST_MID . '.ModuleService');
 
-    public function getRoute(string $method, string $apiRootPath, string $requestUri): Route
-    {
-        $apiRootPath = rtrim($apiRootPath, '/');
+        $request = Context::getCurrent()->getRequest();
+        $requestUri = $request->getRequestUri();
+
+        $apiRootPath = rtrim($moduleService->getPropVal('ITSCRIPT_REST_ROOT_PATH'), '/');
 
         // TODO: переписать на запрос раута через слой репозитория
         $routes = [
             ['GET', '/users', 'UserController@index'],
             ['GET', '/users/{id}', 'UserController@show'],
+            ['GET', '/users/group/{id}/count/{cnt}', 'UserController@listByGroup'],
             ['POST', '/users', 'UserController@store'],
             ['PUT', '/users/{id}', 'UserController@update'],
             ['DELETE', '/users/{id}', 'UserController@destroy'],
@@ -34,7 +37,7 @@ class RoutService
             print_r([$route[1], $pattern, $path]);
             echo '</pre>';*/
 
-            if ($route[0] !== $method || !preg_match($pattern, $path, $matches)) {
+            if (!preg_match($pattern, $path, $matches)) {
                 continue;
             }
 

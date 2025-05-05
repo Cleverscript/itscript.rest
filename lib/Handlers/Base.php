@@ -2,12 +2,12 @@
 
 namespace Itscript\Rest\Handlers;
 
-use Bitrix\Main\Context;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\DI\ServiceLocator;
+use Itscript\Rest\Exceptions\RequestMethodException;
 use Itscript\Rest\Helpers\ResponseHelper;
 use Itscript\Rest\Helpers\ExceptionHelper;
-use Itscript\Rest\Exceptions\ModuleSettingsException;
+use Itscript\Rest\Exceptions\RequestUriException;
 
 Loc::loadMessages(__FILE__);
 
@@ -18,47 +18,24 @@ class Base
         try {
             $serviceLocator = ServiceLocator::getInstance();
 
-            if (!$serviceLocator->has(ITSCRIPT_REST_MID . '.ModuleService')) {
-                return false;
-            }
-
-            if (!$serviceLocator->has(ITSCRIPT_REST_MID . '.RoutService')) {
-                return false;
-            }
-
-            $moduleService = $serviceLocator->get(ITSCRIPT_REST_MID . '.ModuleService');
-
-            $request = Context::getCurrent()->getRequest();
-
-            if ($request->isAdminSection()) {
-                return false;
-            }
-
-            $requestMethod = $request->getRequestMethod();
-            $requestUri = $request->getRequestUri();
-
-            $apiRootPath = $moduleService->getPropVal('ITSCRIPT_REST_ROOT_PATH');
-
-            if (empty($apiRootPath)) {
-                throw new ModuleSettingsException(
-                    Loc::getMessage('ITSCRIPT_REST_ROOT_PATH_EMPTY', ['#MID#' => ITSCRIPT_REST_MID])
-                );
-            }
-
+            // Получаем rout
             $routService = $serviceLocator->get(ITSCRIPT_REST_MID . '.RoutService');
+            $route = $routService->getRoute();
 
-            if (!$routService->isAllowed($requestUri, $apiRootPath)) {
-                //ResponseHelper::set404();
-                return false;
-            }
+            // Проверяем реквест на соответсвие настрокам раута (метод, авторизация, e.t.c)
+            $middlewareService = $serviceLocator->get(ITSCRIPT_REST_MID . '.Middleware');
+            $middlewareService->checkRequestUri()->checkMethod($route);
 
-            $route = $routService->getRoute($requestMethod, $apiRootPath, $requestUri);
-
+            // Получаем из раута объект контроллера и вызываем его метод
             $controllerService = $serviceLocator->get(ITSCRIPT_REST_MID . '.ControllerService');
             $data = $controllerService->setInstance($route)->callAction();
 
             ResponseHelper::set200($data);
 
+        } catch (RequestUriException) {
+            // Показываем web page
+        } catch (RequestMethodException) {
+            ResponseHelper::set405();
         } catch (\Throwable $e) {
             ResponseHelper::set500();
             ExceptionHelper::writeToLog($e->getMessage());

@@ -2,7 +2,6 @@
 
 namespace Itscript\Rest\Services;
 
-use Itscript\Rest\Traits\SingletonTrait;
 use Itscript\Rest\Traits\ModuleTrait;
 use Bitrix\Main\Application;
 

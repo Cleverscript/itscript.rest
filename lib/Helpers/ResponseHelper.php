@@ -18,6 +18,18 @@ class ResponseHelper
         die(self::encode(['error' => 'Route not found']));
     }
 
+    public static function set405(): string
+    {
+        http_response_code(405);
+        header('Content-Type: application/json');
+        //header('Allow: GET, PUT, DELETE');  // TODO: как то передать сюда rout из которого подставить его метод
+
+        die(self::encode([
+            'error' => 'Method Not Allowed',
+            'message' => 'The requested HTTP method is not allowed for this resource.'
+        ]));
+    }
+
     public static function set500(): string
     {
         header('Content-Type: application/json');

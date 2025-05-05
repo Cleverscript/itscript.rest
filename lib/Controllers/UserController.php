@@ -17,4 +17,9 @@ class UserController extends BaseController implements BaseControllerInterface
 
         return $obj;
     }
+
+    public function listByGroup(int $id, int $cnt)
+    {
+        return [$id, $cnt];
+    }
 }
