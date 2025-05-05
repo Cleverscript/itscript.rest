@@ -37,6 +37,51 @@ $arMainPropsTab = [
                 100
             ]
         ],
+        [
+            "ITSCRIPT_REST_ENCRYPTION_ALG",
+            Loc::getMessage("ITSCRIPT_REST_ENCRYPTION_ALG"),
+            $defaultOptions["ITSCRIPT_REST_ENCRYPTION_ALG"],
+            [
+                "selectbox",
+                ['HS256' => 'HS256']
+            ]
+        ],
+        [
+            "ITSCRIPT_REST_SECRET_KEY",
+            Loc::getMessage("ITSCRIPT_REST_SECRET_KEY"),
+            $defaultOptions["ITSCRIPT_REST_SECRET_KEY"],
+            [
+                "text",
+                100
+            ]
+        ],
+        [
+            "ITSCRIPT_REST_JWT_LIFETIME",
+            Loc::getMessage("ITSCRIPT_REST_JWT_LIFETIME"),
+            $defaultOptions["ITSCRIPT_REST_JWT_LIFETIME"],
+            [
+                "text",
+                100
+            ]
+        ],
+        [
+            "ITSCRIPT_REST_JWT_ISS",
+            Loc::getMessage("ITSCRIPT_REST_JWT_ISS"),
+            $defaultOptions["ITSCRIPT_REST_JWT_ISS"],
+            [
+                "text",
+                100
+            ]
+        ],
+        [
+            "ITSCRIPT_REST_JWT_AUD",
+            Loc::getMessage("ITSCRIPT_REST_JWT_AUD"),
+            $defaultOptions["ITSCRIPT_REST_JWT_AUD"],
+            [
+                "text",
+                100
+            ]
+        ]
     ]
 ];
 

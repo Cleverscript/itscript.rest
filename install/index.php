@@ -1,11 +1,12 @@
 <?php
 use Bitrix\Main\Loader;
+use Bitrix\Main\Application;
 use Bitrix\Main\Entity\Base;
 use Bitrix\Main\IO\Directory;
-use Bitrix\Main\Application;
 use Bitrix\Main\EventManager;
 use Bitrix\Main\ModuleManager;
 use Bitrix\Main\Localization\Loc;
+use Itscript\Rest\Tables\RoutesTable;
 
 Loc::loadMessages(__FILE__);
 
@@ -134,7 +135,7 @@ class itscript_rest extends CModule
     private function getEntities()
     {
         return [
-            //'\\' . BpCatalogProductsTable::class
+            '\\' . RoutesTable::class
         ];
     }
 
