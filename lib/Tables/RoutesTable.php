@@ -2,9 +2,13 @@
 
 namespace Itscript\Rest\Tables;
 
+use Bitrix\Main\ORM\Event;
+use Bitrix\Main\Application;
+use Itscript\Rest\Helpers\Config;
 use Bitrix\Main\Entity\DataManager;
 use Bitrix\Main\ORM\Fields\StringField;
 use Bitrix\Main\ORM\Fields\IntegerField;
+
 
 /**
  * Класс описывающий ORM модель сущности товара
@@ -25,7 +29,7 @@ class RoutesTable extends DataManager
                 ->configureAutocomplete(),
 
             (new StringField('ACTIVE'))
-                ->configureDefaultValue('N')
+                ->configureDefaultValue('Y')
                 ->configureRequired(),
 
             (new StringField('METHOD'))
@@ -37,5 +41,22 @@ class RoutesTable extends DataManager
             (new StringField('HANDLER'))
                 ->configureRequired(),
         ];
+    }
+
+    public static function OnAfterAdd(Event $event) {
+        self::clearCache();
+    }
+
+    public static function OnAfterUpdate(Event $event) {
+        self::clearCache();
+    }
+
+    public static function OnAfterDelete(Event $event) {
+        self::clearCache();
+    }
+
+    private static function clearCache()
+    {
+        (Application::getInstance()->getTaggedCache())->clearByTag(Config::ROUTES_CACHE_TAG);
     }
 }

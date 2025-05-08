@@ -3,8 +3,10 @@
 namespace Itscript\Rest\Repositories;
 
 use Bitrix\Main\Data\Cache;
-use Itscript\Rest\Enums\CacheTimeEnum;
+use Bitrix\Main\Application;
+use Itscript\Rest\Helpers\Config;
 use Itscript\Rest\Tables\RoutesTable;
+use Itscript\Rest\Enums\CacheTimeEnum;
 
 class RoutRepository
 {
@@ -12,12 +14,14 @@ class RoutRepository
     {
         $data = [];
         $cache = Cache::createInstance();
+        $taggedCache = Application::getInstance()->getTaggedCache();
         $cacheTime = CacheTimeEnum::HOUR;
         $cacheId = md5(RoutesTable::getTableName() . $method);
 
-        if ($cache->initCache($cacheTime, $cacheId, '/itscript_rest/routes')) {
+        if ($cache->initCache($cacheTime, $cacheId, Config::ROUTES_CACHE_DIR)) {
             $data = $cache->getVars();
         } elseif ($cache->startDataCache()) {
+            $taggedCache->startTagCache(Config::ROUTES_CACHE_DIR);
             $query = RoutesTable::query()
                 ->setSelect(['METHOD', 'PATH', 'HANDLER'])
                 ->where('METHOD', strtoupper($method))
@@ -26,9 +30,13 @@ class RoutRepository
             $data = $query->exec()->fetchAll();
 
             if (empty($data)) {
+                $taggedCache->abortTagCache();
                 $cache->abortDataCache();
             }
 
+            $taggedCache->registerTag(Config::ROUTES_CACHE_TAG);
+
+            $taggedCache->endTagCache();
             $cache->endDataCache($data);
         }
 

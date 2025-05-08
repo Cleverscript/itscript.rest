@@ -8,9 +8,9 @@ use Bitrix\Main\Context;
 use Itscript\Rest\Entities\Route;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\DI\ServiceLocator;
-use Itscript\Rest\Exceptions\AuthLoginFailException;
 use Itscript\Rest\Exceptions\RequestUriException;
 use Itscript\Rest\Exceptions\BadRequestException;
+use Itscript\Rest\Exceptions\AuthLoginFailException;
 use Itscript\Rest\Exceptions\RequestMethodException;
 use Itscript\Rest\Exceptions\ModuleSettingsException;
 

@@ -43,14 +43,14 @@ class Base
 
         } catch (RequestUriException) {
             // Показываем web page
-        } catch (BadRequestException) {
-            ResponseHelper::set400();
-        } catch (RoutNotFoundException) {
-            ResponseHelper::set404();
-        } catch (RequestMethodException) {
-            ResponseHelper::set405();
-        } catch (AuthLoginFailException) {
-            ResponseHelper::set401();
+        } catch (BadRequestException $e) {
+            ResponseHelper::set400($e->getMessage());
+        } catch (RoutNotFoundException $e) {
+            ResponseHelper::set404($e->getMessage());
+        } catch (RequestMethodException $e) {
+            ResponseHelper::set405($e->getMessage());
+        } catch (AuthLoginFailException $e) {
+            ResponseHelper::set401($e->getMessage());
         } catch (\Throwable $e) {
             ResponseHelper::set500();
             ExceptionHelper::writeToLog($e->getMessage());

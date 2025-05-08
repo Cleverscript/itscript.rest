@@ -21,42 +21,42 @@ class ResponseHelper
         self::response(201, $data);
     }
 
-    public static function set400(): void
+    public static function set400(string $message = ''): void
     {
         self::response(400, [
             'status' => 'error',
-            'message' => 'Bad request'
+            'message' => "Bad request. {$message}"
         ]);
     }
-    public static function set401(): void
+    public static function set401(string $message = ''): void
     {
         self::response(401, [
             'status' => 'error',
-            'message' => 'Unauthorized'
+            'message' => "Unauthorized. {$message}"
         ]);
     }
 
-    public static function set404(): void
+    public static function set404(string $message = ''): void
     {
         self::response(404, [
             'status' => 'error',
-            'message' => 'The requested resource was not found.'
+            'message' => 'The requested resource was not found. {$message}'
         ]);
     }
 
-    public static function set405(): void
+    public static function set405(string $message = ''): void
     {
         self::response(405, [
             'status' => 'error',
-            'message' => 'Method Not Allowed'
+            'message' => "Method Not Allowed. {$message}"
         ]);
     }
 
-    public static function set500(): void
+    public static function set500(string $message = ''): void
     {
         self::response(500, [
             'status' => 'error',
-            'message' => 'Internal Server Error'
+            'message' => "Internal Server Error."
         ]);
     }
 
