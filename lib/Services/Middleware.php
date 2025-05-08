@@ -16,7 +16,7 @@ use Itscript\Rest\Exceptions\ModuleSettingsException;
 
 Loc::loadMessages(__FILE__);
 
-class Middleware
+final class Middleware
 {
     protected $route;
     protected $request;
