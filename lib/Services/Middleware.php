@@ -28,17 +28,11 @@ final class Middleware
 
         $this->request = Context::getCurrent()->getRequest();
         $this->apiRootPath = $moduleService->getPropVal('ITSCRIPT_REST_ROOT_PATH');
-
-        if (empty($this->apiRootPath)) {
-            throw new ModuleSettingsException(
-                Loc::getMessage('ITSCRIPT_REST_ROOT_PATH_EMPTY', ['#MID#' => ITSCRIPT_REST_MID])
-            );
-        }
     }
 
     public function checkRequestUri()
     {
-        if ($this->request->isAdminSection() || !str_contains($this->request->getRequestUri(), $this->apiRootPath)) {
+        if ($this->request->isAdminSection() || empty($this->apiRootPath) || !str_contains($this->request->getRequestUri(), $this->apiRootPath)) {
             throw new RequestUriException();
         }
 
