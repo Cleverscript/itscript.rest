@@ -3,12 +3,6 @@ use Bitrix\Main\Loader;
 use Bitrix\Main\Config\Option;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\HttpApplication;
-use Otus\Autoservice\Services\DealService;
-use Otus\Autoservice\Services\IblockService;
-use Otus\Autoservice\Services\BizProcService;
-use Otus\Autoservice\Services\HighloadBlockService;
-use Otus\Autoservice\Services\DepartmentService;
-use Otus\Clinic\Utils\BaseUtils;
 
 $module_id = "itscript.rest";
 
