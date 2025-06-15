@@ -28,10 +28,6 @@ class RoutesTable extends DataManager
                 ->configurePrimary()
                 ->configureAutocomplete(),
 
-            (new StringField('ACTIVE'))
-                ->configureDefaultValue('Y')
-                ->configureRequired(),
-
             (new StringField('METHOD'))
                 ->configureRequired(),
 
@@ -40,6 +36,10 @@ class RoutesTable extends DataManager
 
             (new StringField('HANDLER'))
                 ->configureRequired(),
+
+            (new StringField('ACTIVE'))
+                ->configureRequired()
+                ->configureDefaultValue('Y')
         ];
     }
 
@@ -58,5 +58,6 @@ class RoutesTable extends DataManager
     private static function clearCache()
     {
         (Application::getInstance()->getTaggedCache())->clearByTag(Config::ROUTES_CACHE_TAG);
+        (Application::getInstance()->getTaggedCache())->clearByTag(Config::CMP_GRID_ROUTS_CACHE_TAG);
     }
 }

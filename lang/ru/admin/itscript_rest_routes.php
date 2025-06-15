@@ -1,0 +1,2 @@
+<?php
+$MESS['ITSCRIPT_REST_ADM_PAGE_LOG_TITLE'] = 'Рауты';

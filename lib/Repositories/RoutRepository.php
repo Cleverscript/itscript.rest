@@ -42,4 +42,30 @@ class RoutRepository
 
         return $data;
     }
+
+    public static function getList(array $columns = ['ID'], array $filter = [], int $page = 1, array $order = ['ID' => 'DESC'], int $limit = 10)
+    {
+        $offset = $limit * ($page-1);
+
+        $query = RoutesTable::query()
+            ->setSelect($columns)
+            ->addOrder('ID', 'DESC');
+
+        if (!empty($order)) {
+            foreach ($order as $key => $value) {
+                $query->addOrder($key, $value);
+            }
+        }
+
+        if (!empty($filter)) {
+            foreach ($filter as $field => $value) {
+                $query->where($field, $value);
+            }
+        }
+
+        $query->setLimit($limit);
+        $query->setOffset($offset);
+
+        return $query->fetchAll();
+    }
 }

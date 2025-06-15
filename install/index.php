@@ -2,6 +2,8 @@
 use Bitrix\Main\Loader;
 use Bitrix\Main\Application;
 use Bitrix\Main\Entity\Base;
+use Bitrix\Main\IO\File;
+use Bitrix\Main\Context;
 use Bitrix\Main\IO\Directory;
 use Bitrix\Main\EventManager;
 use Bitrix\Main\ModuleManager;
@@ -56,8 +58,12 @@ class itscript_rest extends CModule
         $this->SHOW_SUPER_ADMIN_GROUP_RIGHTS = 'Y';
         $this->MODULE_GROUP_RIGHTS = "Y";
 
+        $this->request = Context::getCurrent()->getRequest();
         $this->eventManager = EventManager::getInstance();
-        $this->localPath = $_SERVER["DOCUMENT_ROOT"] . '/local';
+        $this->docRoot = Application::getDocumentRoot();
+
+        $this->localPath = $this->docRoot . '/local';
+        $this->localPathCmp = $this->localPath . '/components';
     }
 
     public function isVersionD7()
@@ -97,12 +103,29 @@ class itscript_rest extends CModule
             return false;
         }
 
+        if (!CopyDirFiles(
+            $this->GetPath() . '/install/components',
+            $this->localPathCmp,
+            true,
+            true
+        )) {
+            return false;
+        }
+
         return true;
     }
 
     function UnInstallFiles()
     {
+        $adminFiles = ['itscript_rest_routes.php'];
 
+        foreach ($adminFiles as $name) {
+            File::deleteFile($this->docRoot . '/bitrix/admin/' . $name);
+        }
+
+        Directory::deleteDirectory(
+            $this->localPath . '/components/' . current(explode('.', $this->MODULE_ID)) . '/report_grid_log'
+        );
     }
 
     protected function getEventsArray()
@@ -197,9 +220,21 @@ class itscript_rest extends CModule
 
     function DoUninstall()
     {
+        global $APPLICATION, $step;
+
         $this->UnInstallEvents();
         $this->UnInstallFiles();
-        $this->UninstallDB();
+
+        if (!isset($step)) {
+            $APPLICATION->IncludeAdminFile(
+                Loc::getMessage('ITSCRIPT_REST_UNINSTALL_TITLE'),
+                __DIR__ . '/unstep.php'
+            );
+        }
+
+        if ($this->request->getPost('delete_tables') === 'Y') {
+            $this->UninstallDB();
+        }
 
         ModuleManager::unRegisterModule($this->MODULE_ID);
 

@@ -1,0 +1,5 @@
+<?php
+$MESS['ITSCRIPT_REST_DELETE_TABLES_TITLE'] = 'Удалить данные модуля из БД?';
+$MESS['ITSCRIPT_REST_DELETE_YES'] = 'Да';
+$MESS['ITSCRIPT_REST_DELETE_NO'] = 'Нет';
+$MESS['ITSCRIPT_REST_DELETE_SUBMIT'] = 'Далее';

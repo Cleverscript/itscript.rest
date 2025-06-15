@@ -8,3 +8,4 @@ $MESS['ITSCRIPT_REST_RIGHT_DENIED'] = 'Доступ запрещен';
 $MESS['ITSCRIPT_REST_RIGHT_READ'] = 'Только чтение';
 $MESS['ITSCRIPT_REST_RIGHT_WRITE_SETTINGS'] = 'Изменение настроек модуля';
 $MESS['ITSCRIPT_REST_RIGHT_FULL'] = 'Полный доступ';
+$MESS['ITSCRIPT_REST_UNINSTALL_TITLE'] = 'Удаление модуля REST API';

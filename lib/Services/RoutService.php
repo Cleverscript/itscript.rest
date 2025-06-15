@@ -3,6 +3,8 @@
 namespace Itscript\Rest\Services;
 
 use Bitrix\Main\Context;
+use Bitrix\Main\ORM\Fields\ExpressionField;
+use Itfactory\Report\Tables\LogsTable;
 use Itscript\Rest\Entities\Route;
 use Bitrix\Main\DI\ServiceLocator;
 use Itscript\Rest\Repositories\RoutRepository;
